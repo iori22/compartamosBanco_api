@@ -1,0 +1,63 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+  # Instalar Java
+  - task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '17'
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+    displayName: "Set up Java 17"
+
+  # Autorización con SonarCloud
+  - task: SonarCloudPrepare@1
+    inputs:
+      SonarCloud: 'SonarCloud-ServiceConnection'  # Nombre de Service Connection
+      organization: 'COMPARTAMOSBANCO'
+      scannerMode: 'CLI'
+      projectKey: 'CLAVE-COMPARTAMOSBANCO'
+      projectName: 'Proyecto de Automatizacion WEB para CompartamosBanco'
+      extraProperties: |
+        sonar.sources=.
+        sonar.tests=src/test/java
+        sonar.java.binaries=target/classes
+        sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+    displayName: "Prepare SonarCloud Analysis"
+
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean verify'
+      publishJUnitResults: true
+      testResultsFiles: '**/target/surefire-reports/*.xml'
+    displayName: "Run Karate API Tests"
+
+  - task: SonarCloudAnalyze@1
+    displayName: "Run SonarCloud Analysis"
+
+  - task: SonarCloudPublish@1
+    inputs:
+      pollingTimeoutSec: '300'
+    displayName: "Publish SonarCloud Quality Gate Result"
+
+  # Enviar resultados a XRAY
+  - script: |
+      curl -H "Content-Type: multipart/form-data" \
+      -H "Authorization: Bearer $(XRAY_TOKEN)" \
+      -F "file=@target/karate-reports/karate-summary.json" \
+      https://xray.cloud.getxray.app/api/v2/import/execution
+    displayName: "Upload API Results to Xray"
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'target/allure-results'
+      artifact: 'allure'
+      publishLocation: 'pipeline'
+    displayName: "Build & attach Allure results"
