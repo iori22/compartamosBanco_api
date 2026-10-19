@@ -1,4 +1,4 @@
-Guía completa para levantar el proyecto de CompartamosBanco / WEB
+Guía completa para levantar el proyecto de 
 
 1) Instalar Java / Maven / Gradle
 Ingresar a: https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html

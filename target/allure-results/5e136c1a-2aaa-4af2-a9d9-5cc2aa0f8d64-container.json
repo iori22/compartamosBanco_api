@@ -1,0 +1,1 @@
+{"uuid":"5e136c1a-2aaa-4af2-a9d9-5cc2aa0f8d64","name":"[2.1:53] Validar el endPoint de: POST /usuarios - Registrar usuario - Happy-Path","children":["e3e22524-8e8a-4968-89d5-39de428f1c0e"],"befores":[],"afters":[],"start":1792201460372,"stop":1792201461399}

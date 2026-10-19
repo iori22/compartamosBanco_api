@@ -1,0 +1,37 @@
+[
+  {
+    "message": "Cadastro realizado com sucesso",
+    "_id": "#string"
+  },
+
+  {
+    "message": "Este email já está sendo usado"
+  },
+
+  {
+    "email": "email deve ser um email válido"
+  },
+
+  {
+    "nome": "Fulano da Silva",
+    "email": "fulano@qa.com",
+    "password": "teste",
+    "administrador": "true",
+    "_id": "0uxuPY0cbmQhpEz1"
+  },
+
+  {
+  "message":"Usuário não encontrado"
+  },
+
+  {
+  "message": "Registro excluído com sucesso"
+  },
+
+  {
+  "message":"Não é permitido excluir usuário com carrinho cadastrado","idCarrinho":"KozG2GKwcAbEqrsN",
+  }
+
+
+]
+

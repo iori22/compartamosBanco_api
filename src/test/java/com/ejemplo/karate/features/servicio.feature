@@ -1,16 +1,24 @@
 Feature: Prueba básica de API
 
+
+/*
+Ejecuta los tests con Maven:
+mvn clean test
+
+Genera el reporte Allure:
+mvn allure:report
+
+Para abrirlo en el navegador:
+mvn allure:serve
+
+
   Background:
+    * configure ssl = true
     * configure logPrettyRequest = true
     * configure logPrettyResponse = true
     Given url 'https://reqres.in'
     * header x-api-key = 'reqres-free-v1'
 
-  #Cada escenario automatizado está vinculado a un Test Case en Xray mediante un tag, por ejemplo @COD_XRAY-123.
-  #Esto permite que los reportes y el ciclo de vida del test se integren con Jira y se trace la ejecución
-  # desde el plan de pruebas hasta la automatización.
-
-  @COD_XRAY-010
   Scenario: Consulta API – Get User (CompartamosBanco)
     Given path 'api', 'users', 2
     When method get
@@ -20,8 +28,6 @@ Feature: Prueba básica de API
     * def nombreCompleto = nombre + ' ' + apellido
     And match nombreCompleto == 'Janet Weaver'
 
-
-  @COD_XRAY-011
   Scenario: LOGIN EXITOSO - POST
     * def crearBody =
   """

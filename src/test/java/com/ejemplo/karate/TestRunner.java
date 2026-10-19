@@ -6,6 +6,11 @@ public class TestRunner {
 
     @Karate.Test
     Karate testAll() {
-        return Karate.run("src/test/java/com/ejemplo/karate/features/servicio.feature").outputCucumberJson(true);
+        return Karate.run("src/test/java/com/ejemplo/karate/features/retoTecnicoInetum.feature")
+                .tags("@Crear")
+                .systemProperty("karate.env", "qa")
+                .outputCucumberJson(true);
+
+        // PARA EL REPORTE ES ESTE:  mvn clean test "-Dkarate.env=qa"
     }
 }
